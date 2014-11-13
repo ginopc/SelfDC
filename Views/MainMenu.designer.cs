@@ -49,6 +49,7 @@
             // 
             // picButton11
             // 
+            picButton11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(224)))), ((int)(((byte)(255)))));
             picButton11.Image = ((System.Drawing.Image)(resources.GetObject("picButton11.Image")));
             picButton11.Location = new System.Drawing.Point(3, 34);
             picButton11.Name = "picButton11";
@@ -67,6 +68,7 @@
             // 
             // picButton12
             // 
+            picButton12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             picButton12.Image = ((System.Drawing.Image)(resources.GetObject("picButton12.Image")));
             picButton12.Location = new System.Drawing.Point(90, 34);
             picButton12.Name = "picButton12";
@@ -76,7 +78,7 @@
             // 
             // picButton13
             // 
-            picButton13.Enabled = false;
+            picButton13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             picButton13.Image = ((System.Drawing.Image)(resources.GetObject("picButton13.Image")));
             picButton13.Location = new System.Drawing.Point(177, 34);
             picButton13.Name = "picButton13";

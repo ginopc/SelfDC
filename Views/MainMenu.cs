@@ -10,6 +10,7 @@ namespace SelfDC.Views
     {
         private OrderForm oForm;
         private LabelsForm lForm;
+        private InventoryForm iForm;
 
         public MainMenu()
         {
@@ -17,6 +18,7 @@ namespace SelfDC.Views
             InitializeComponent();
             oForm = new OrderForm();
             lForm = new LabelsForm();
+            iForm = new InventoryForm();
         }
 
         /** visualizza le info sul programma */
@@ -69,7 +71,7 @@ namespace SelfDC.Views
         private void actNewInventory(object sender, EventArgs e)
         {
             ScsUtils.WriteLog(string.Format("Richiesta apertura della maschera {0}", "InventoryForm"));
-            //throw new NotImplementedException();
+            iForm.Show();
         }
 
         private void MainMenu_Resize(object sender, EventArgs e)
@@ -80,10 +82,13 @@ namespace SelfDC.Views
             int borderSize = 3;
 
             // Ridimensiona i pulsanti in modo che stiano sempre in 3 colonne
+            // calcola la dimensione minima
+            int buttonSize = this.ClientSize.Width > this.ClientSize.Height ? this.ClientSize.Height : this.ClientSize.Width;
 
             // calcolo la dimensione dei pulsanti in base alla grandezza della finestra
-            int btnWidth = this.ClientSize.Width / numCols;
-            int btnHeight = this.ClientSize.Height / numRows;
+            // Pulsanti quadrati: H = W
+            int btnWidth = buttonSize / numCols;
+            int btnHeight = btnWidth;
 
             // pulsanti quadrati con la dimensione minima
             if (btnWidth < btnHeight)

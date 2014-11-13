@@ -437,5 +437,29 @@ namespace SelfDC.Views
             ScsUtils.WriteLog("Maschera " + this.Name + " disattivata");
             bcReader.Close();
         }
+
+        private void txtQta_Validating(object sender, CancelEventArgs e)
+        {
+            double Num;
+
+            // Se non c'è testo esco
+            if (txtQta.Text.Trim().Length == 0) return;
+
+            try
+            {
+                Num = double.Parse(txtQta.Text.Trim());
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show("Errore nel campo Q.ta");
+                e.Cancel = true;
+                return;
+            }
+            if (Num > 0)
+            {
+                // formatto il numero
+                txtQta.Text = string.Format("{0:#0}", Num);
+            }
+        }
     }
 }

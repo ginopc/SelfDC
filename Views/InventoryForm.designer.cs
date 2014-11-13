@@ -1,6 +1,6 @@
 ﻿namespace SelfDC
 {
-    partial class OrderForm
+    partial class InventoryForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,8 +30,8 @@
         {
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label2;
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem();
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem();
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem();
             this.statusBar = new System.Windows.Forms.StatusBar();
             this.contextMenu = new System.Windows.Forms.ContextMenu();
             this.cmnuDelete = new System.Windows.Forms.MenuItem();
@@ -117,7 +117,7 @@
             // menuItem1
             // 
             this.menuItem1.MenuItems.Add(this.mnuExport);
-            this.menuItem1.Text = "Ordine";
+            this.menuItem1.Text = "Inventario";
             // 
             // mnuExport
             // 
@@ -147,7 +147,7 @@
             // 
             // panEdit
             // 
-            this.panEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(224)))), ((int)(((byte)(255)))));
+            this.panEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.panEdit.Controls.Add(this.cbCodInterno);
             this.panEdit.Controls.Add(this.panel1);
             this.panEdit.Controls.Add(label3);
@@ -170,7 +170,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(224)))), ((int)(((byte)(255)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.panel1.Controls.Add(this.btnNew);
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnSave);
@@ -236,14 +236,14 @@
             this.listBox.ContextMenu = this.contextMenu;
             this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox.FullRowSelect = true;
-            listViewItem3.Text = "123456789012";
-            listViewItem3.SubItems.Add("");
-            listViewItem3.SubItems.Add("10");
-            listViewItem4.Text = "";
-            listViewItem4.SubItems.Add("123456");
-            listViewItem4.SubItems.Add("15");
-            this.listBox.Items.Add(listViewItem3);
-            this.listBox.Items.Add(listViewItem4);
+            listViewItem1.Text = "123456789012";
+            listViewItem1.SubItems.Add("");
+            listViewItem1.SubItems.Add("10");
+            listViewItem2.Text = "";
+            listViewItem2.SubItems.Add("123456");
+            listViewItem2.SubItems.Add("15");
+            this.listBox.Items.Add(listViewItem1);
+            this.listBox.Items.Add(listViewItem2);
             this.listBox.Location = new System.Drawing.Point(0, 86);
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(314, 209);
@@ -267,7 +267,7 @@
             this.clQta.Text = "qta";
             this.clQta.Width = 57;
             // 
-            // OrderForm
+            // InventoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -280,14 +280,14 @@
             this.Controls.Add(this.statusBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Menu = this.mainMenu;
-            this.Name = "OrderForm";
+            this.Name = "InventoryForm";
             this.Text = "Ordini";
-            this.Deactivate += new System.EventHandler(this.OrderForm_Deactivate);
-            this.Load += new System.EventHandler(this.OrderForm_Load);
-            this.Closed += new System.EventHandler(this.OrderForm_Closed);
-            this.Activated += new System.EventHandler(this.OrderForm_Activated);
-            this.Closing += new System.ComponentModel.CancelEventHandler(this.OrderForm_Closing);
-            this.Resize += new System.EventHandler(this.OrderForm_Resize);
+            this.Deactivate += new System.EventHandler(this.InventoryForm_Deactivate);
+            this.Load += new System.EventHandler(this.InventoryForm_Load);
+            this.Closed += new System.EventHandler(this.InventoryForm_Closed);
+            this.Activated += new System.EventHandler(this.InventoryForm_Activated);
+            this.Closing += new System.ComponentModel.CancelEventHandler(this.InventoryForm_Closing);
+            this.Resize += new System.EventHandler(this.InventoryForm_Resize);
             this.panEdit.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

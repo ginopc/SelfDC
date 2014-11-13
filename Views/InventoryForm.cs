@@ -8,14 +8,14 @@ using System.IO;
 
 namespace SelfDC
 {
-    public partial class OrderForm : Form
+    public partial class InventoryForm : Form
     {
         bool ItemEdit = false;
         private List<OrderItem> listaProdotti;
         private IDevice bcReader;
 
         /** costruttore della classe */
-        public OrderForm()
+        public InventoryForm()
         {
             InitializeComponent();
             txtCode.Text = "";
@@ -34,7 +34,7 @@ namespace SelfDC
             ScsUtils.WriteLog("Creazione maschera " + this.Name);
         }
 
-        private void OrderForm_Load(object sender, EventArgs e)
+        private void InventoryForm_Load(object sender, EventArgs e)
         {
             ScsUtils.WriteLog("Caricamento maschera " + this.Name);
             // Imposto la maschera a tutto schermo
@@ -145,12 +145,12 @@ namespace SelfDC
         }
 
         /*  Form Resize */
-        private void OrderForm_Resize(object sender, EventArgs e)
+        private void InventoryForm_Resize(object sender, EventArgs e)
         {
-            double ctlWidth = (double)ClientSize.Width;
+            double ctlWidth = (double) ClientSize.Width;
 
             /** Resize listBox */
-            listBox.Width = (int)ctlWidth;
+            listBox.Width = (int) ctlWidth;
             listBox.Columns[0].Width = (int)(ctlWidth * 0.50);
             listBox.Columns[1].Width = (int)(ctlWidth * 0.30);
             listBox.Columns[1].Width = (int)(ctlWidth * 0.20);
@@ -191,7 +191,7 @@ namespace SelfDC
             if (res == DialogResult.No) return;
 
             // Se il file esiste chiedo conferma di sovrascrittura
-            if (File.Exists(Settings.OrdineFileName))
+            if (File.Exists(Settings.InventarioFilename))
             {
                 res = MessageBox.Show(
                         "E' presente una precedente esportazione. Vuoi sovrascrivere?",
@@ -207,7 +207,7 @@ namespace SelfDC
             {
                 ordine.Add(new OrderItem(item.Text, item.SubItems[1].Text, Convert.ToInt32(item.SubItems[2].Text)));
             }
-            if (ordine.ToFile(Settings.OrdineFileName) < 0)
+            if (ordine.ToFile(Settings.InventarioFilename) < 0)
             {
                 return;
             }
@@ -367,7 +367,7 @@ namespace SelfDC
         }
 
         /** richiesta chiusura */
-        private void OrderForm_Closing(object sender, CancelEventArgs e)
+        private void InventoryForm_Closing(object sender, CancelEventArgs e)
         {
             DialogResult res = MessageBox.Show(
                             "Vuoi uscire dall'applicazione?"
@@ -380,7 +380,7 @@ namespace SelfDC
         }
 
         /** dopo conferma chiusura */
-        private void OrderForm_Closed(object sender, EventArgs e)
+        private void InventoryForm_Closed(object sender, EventArgs e)
         {
             // Salvo le impostazioni
             Settings.SaveToFile(Settings.AppCfgFileName);
@@ -393,25 +393,28 @@ namespace SelfDC
 
         }
 
-        private void OrderForm_Activated(object sender, EventArgs e)
+        private void InventoryForm_Activated(object sender, EventArgs e)
         {
             ScsUtils.WriteLog(string.Format("Maschera {0} attivata", this.Name));
             bcReader.Open();
         }
 
-        private void OrderForm_Deactivate(object sender, EventArgs e)
+        private void InventoryForm_Deactivate(object sender, EventArgs e)
         {
             ScsUtils.WriteLog(string.Format("Maschera {0} disattivata", this.Name));
             bcReader.Close();
         }
 
-        /* valida il contenuto della casella quantità */
         private void txtQta_Validating(object sender, CancelEventArgs e)
         {
             double Num;
 
             // Se non c'è testo esco
-            if (txtQta.Text.Trim().Length == 0) return;
+            if (txtQta.Text.Trim().Length == 0)
+            {
+                e.Cancel = true;
+                return;
+            }
 
             try
             {
@@ -426,7 +429,7 @@ namespace SelfDC
             if (Num > 0)
             {
                 // formatto il numero
-                txtQta.Text = string.Format("{0:#0}", Num);
+                txtQta.Text = string.Format("{0:#0.000}", Num);
             }
         }
     }
