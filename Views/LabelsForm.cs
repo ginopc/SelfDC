@@ -41,6 +41,7 @@ namespace SelfDC.Views
 
             // Imposto la maschera a tutto schermo
             this.WindowState = FormWindowState.Maximized;
+            statusBar.Text = "Nessun Record";
         }
 
         private void bcReader_OnScan(object sender, EventArgs e)
@@ -139,6 +140,7 @@ namespace SelfDC.Views
             if (res == DialogResult.No) return;
 
             listBox.Items.Remove(listBox.Items[index]);
+            statusBar.Text = listBox.Items.Count > 0 ? string.Format("{0} record", listBox.Items.Count) : "Nessun record";
             ScsUtils.WriteLog(string.Format("In {0}, cancellazione della riga {1}", this.Name, item.Text));
         }
 
@@ -324,6 +326,8 @@ namespace SelfDC.Views
                 ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + item.Text);
             }
 
+            this.statusBar.Text = string.Format("{0} record", listBox.Items.Count);
+
             // pulisco e disabilito i campi
             actFieldReset();
         }
@@ -371,6 +375,7 @@ namespace SelfDC.Views
                 return;
 
             this.listBox.Items.Clear();
+            statusBar.Text = "Nessun record";
         }
 
         private void txtQta_KeyPress(object sender, KeyPressEventArgs e)

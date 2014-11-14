@@ -40,6 +40,8 @@ namespace SelfDC
             // Imposto la maschera a tutto schermo
             this.WindowState = FormWindowState.Maximized;
 
+            statusBar.Text = "Nessun record";
+
             // server per il debug sull'emulatore
             if (System.Environment.OSVersion.Platform.ToString() == "WinCE")
                 bcReader.Open();
@@ -65,9 +67,9 @@ namespace SelfDC
                 cbCodInterno.Checked = false;
                 txtCode.Text = code;
             }
-            txtQta.Text = "1";
+            txtQta.Focus();
 
-            actSave(bcReader, null);
+            // actSave(bcReader, null);
         }
 
         /** modifica l'elemento selezionato */
@@ -141,6 +143,8 @@ namespace SelfDC
             if (res == DialogResult.No) return;
 
             listBox.Items.Remove(listBox.Items[index]);
+            statusBar.Text = listBox.Items.Count > 0 ? string.Format("{0} record", listBox.Items.Count) : "Nessun record";
+
             ScsUtils.WriteLog("In " + this.Name + ", modifica della riga " + item.Text);
         }
 
@@ -272,9 +276,9 @@ namespace SelfDC
             }
 
             // disabilito i campi x evitare modifiche durante il salvataggio
-            txtCode.Enabled = false;
-            txtQta.Enabled = false;
-            cbCodInterno.Enabled = false;
+            //txtCode.Enabled = false;
+            //txtQta.Enabled = false;
+            //cbCodInterno.Enabled = false;
 
             // se ci sono elementi selezionati => è una modifica
             ListViewItem item;
@@ -302,11 +306,18 @@ namespace SelfDC
                     item.SubItems.Add("");
                 }
 
-                if (txtQta.Text == "") txtQta.Text = "1";
+                if (txtQta.Text == "")
+                {
+                    //txtQta.Text = "1";
+                    txtQta.Focus();
+                    return;
+                }
                 item.SubItems.Add(txtQta.Text);
 
                 listBox.Items.Add(item);
             }
+
+            this.statusBar.Text = string.Format("{0} record", listBox.Items.Count);
 
             // pulisco e disabilito i campi
             actFieldReset();
@@ -343,6 +354,7 @@ namespace SelfDC
                 return;
 
             this.listBox.Items.Clear();
+            statusBar.Text = "Nessun record";
         }
 
         private void txtQta_KeyPress(object sender, KeyPressEventArgs e)
