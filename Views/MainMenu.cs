@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Reflection;
 using SelfDC.Utils;
+using System.IO;
 
 namespace SelfDC.Views
 {
@@ -70,7 +71,7 @@ namespace SelfDC.Views
 
         private void actNewInventory(object sender, EventArgs e)
         {
-            ScsUtils.WriteLog(string.Format("Richiesta apertura della maschera {0}", "InventoryForm"));
+            ScsUtils.WriteLog(string.Format("Richiesta apertura della maschera {0}", iForm.Name));
             iForm.Show();
         }
 
@@ -83,35 +84,56 @@ namespace SelfDC.Views
 
             // Ridimensiona i pulsanti in modo che stiano sempre in 3 colonne
             // calcola la dimensione minima
-            int buttonSize = this.ClientSize.Width > this.ClientSize.Height ? this.ClientSize.Height : this.ClientSize.Width;
+            int tableSize = this.ClientSize.Width > this.ClientSize.Height ? this.ClientSize.Height : this.ClientSize.Width;
 
             // calcolo la dimensione dei pulsanti in base alla grandezza della finestra
             // Pulsanti quadrati: H = W
-            int btnWidth = buttonSize / numCols;
+            int btnWidth = tableSize / numCols;
             int btnHeight = btnWidth;
-
-            // pulsanti quadrati con la dimensione minima
-            if (btnWidth < btnHeight)
-                btnHeight = btnWidth;
-            else
-                btnWidth = btnHeight;
-
-
+            
             /*
             for (int i = 0; i < numCols; i++) // colonne
             {
                 for (int j = 0; j < numRows; j++) // righe
                 {
-                    if ( )
-                    {
-                        // è uno dei pulsanti del menu
-                        ctrl.Height = btnHeight - (2 * borderSize);
-                        ctrl.Width = btnWidth - (2 * borderSize);
-                    }
+                    // è uno dei pulsanti del menu
+                    ctrl.Height = btnHeight - (2 * borderSize);
+                    ctrl.Width = btnWidth - (2 * borderSize);
                 }
             }
-             */ 
+            */
 
+            // colonna 1
+            picButton11.Top = borderSize;
+            picButton11.Left = borderSize;
+            picButton11.Width = btnWidth - (2 * borderSize);
+            picButton11.Height = btnHeight - (2 * borderSize);
+
+            picButton12.Top = borderSize;
+            picButton12.Left = btnWidth + borderSize;
+            picButton12.Width = btnWidth - (2 * borderSize);
+            picButton12.Height = btnHeight - (2 * borderSize);
+
+            picButton13.Top = borderSize;
+            picButton13.Left = (2 * btnWidth) + borderSize;
+            picButton13.Width = btnWidth - (2 * borderSize);
+            picButton13.Height = btnHeight - (2 * borderSize);
+
+            // colonna 2
+            picButton21.Top = borderSize;
+            picButton21.Left = borderSize;
+            picButton21.Width = btnWidth - (2 * borderSize);
+            picButton21.Height = btnHeight - (2 * borderSize);
+
+            picButton22.Top = borderSize;
+            picButton22.Left = btnWidth + borderSize;
+            picButton22.Width = btnWidth - (2 * borderSize);
+            picButton22.Height = btnHeight - (2 * borderSize);
+
+            picButton23.Top = borderSize;
+            picButton23.Left = (2 * btnWidth) + borderSize;
+            picButton23.Width = btnWidth - (2 * borderSize);
+            picButton23.Height = btnHeight - (2 * borderSize);
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -119,5 +141,9 @@ namespace SelfDC.Views
             ScsUtils.WriteLog("Caricamento maschera " + this.Name);
         }
 
+        private void pictureBox22_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
