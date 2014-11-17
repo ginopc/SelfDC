@@ -2,6 +2,11 @@ Self DataColletor (SelfDC)
 ==========================
 
 ##> Versione 0.0.5
+(build 29821 del 17.11.2014)
+Forzata validazione del campo QTA anche dietro pressione del tasto ENTER.
+Aggiunta selezione del testo nel campo QTA durante l'editing del campo sulle finestre Ordini, Etichette e Inventario.
+
+(build 28512 del 14.11.2014)
 Corretta dicitura su esportazione etichette "Esporta Ordine".
 Corretta dicitura su esportazione ordine "Esporta Etichette".
 Cambiato layout grafico sulla maschera del menu principale. Ora viene riportato il logo, il numero di versione e le icone sono colorate e disposte automaticamente in base alla risoluzione dello schermo.

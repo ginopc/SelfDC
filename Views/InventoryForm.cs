@@ -96,6 +96,7 @@ namespace SelfDC
             // blocco la checkbox
             cbCodInterno.Enabled = false;
             txtQta.Focus();
+            txtQta.Select(0, txtQta.Text.Length);
         }
 
         /** Inizia un nuovo inserimento manuale */
@@ -360,22 +361,37 @@ namespace SelfDC
         private void txtQta_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
-                actSave(sender, e);
+            {
+                // cambio il focus per forzare la validazione del campo
+                listBox.Focus();
 
-                
+                // Chiamo l'azione di salvataggio dati
+                actSave(sender, e);
+            }
         }
 
         private void txtCode_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
+            {
+                // cambio il focus per forzare la validazione del campo
+                listBox.Focus();
+
+                // Chiamo l'azione di salvataggio dati
                 actSave(sender, e);
+            }
         }
 
         private void cbCodInterno_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
-                actSave(sender, e);
+            {
+                // cambio il focus per forzare la validazione del campo
+                listBox.Focus();
 
+                // Chiamo l'azione di salvataggio dati
+                actSave(sender, e);
+            }
         }
 
         /** richiesta chiusura */

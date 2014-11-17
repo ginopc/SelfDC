@@ -87,12 +87,12 @@ namespace SelfDC.Views
                 cbCodInterno.Checked = false;
                 txtCode.Text = listBox.Items[index].Text;
             }
-
-            txtQta.Text = listBox.Items[index].SubItems[2].Text;
-
             // blocco la checkbox
             cbCodInterno.Enabled = false;
+
+            txtQta.Text = listBox.Items[index].SubItems[2].Text;
             txtQta.Focus();
+            txtQta.Select(0, txtQta.Text.Length);
         }
 
         /** Inizia un nuovo inserimento manuale */
