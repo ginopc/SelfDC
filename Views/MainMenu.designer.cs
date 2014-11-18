@@ -115,7 +115,6 @@
             this.picButton22.Size = new System.Drawing.Size(81, 81);
             this.picButton22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picButton22.Visible = false;
-            this.picButton22.Click += new System.EventHandler(this.pictureBox22_Click);
             // 
             // picButton23
             // 

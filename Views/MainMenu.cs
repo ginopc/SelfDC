@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using SelfDC.Utils;
 using System.IO;
+using System.Drawing;
 
 namespace SelfDC.Views
 {
@@ -139,11 +140,12 @@ namespace SelfDC.Views
         private void MainMenu_Load(object sender, EventArgs e)
         {
             ScsUtils.WriteLog("Caricamento maschera " + this.Name);
-        }
 
-        private void pictureBox22_Click(object sender, EventArgs e)
-        {
-
+            string logoFileName = ScsUtils.GetAppPath() + Path.DirectorySeparatorChar + "app.png";
+            if (File.Exists(logoFileName))
+            {
+                picLogo.Image = new Bitmap(logoFileName);
+            }
         }
     }
 }

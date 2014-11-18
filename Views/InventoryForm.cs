@@ -11,6 +11,7 @@ namespace SelfDC
     public partial class InventoryForm : Form
     {
         bool ItemEdit = false;
+        bool ItemValid = false;
         private List<OrderItem> listaProdotti;
         private IDevice bcReader;
 
@@ -276,10 +277,8 @@ namespace SelfDC
                 return;
             }
 
-            // disabilito i campi x evitare modifiche durante il salvataggio
-            //txtCode.Enabled = false;
-            //txtQta.Enabled = false;
-            //cbCodInterno.Enabled = false;
+            // se la qta non è un dato valido annulla il salvataggio
+            if (!ItemValid) return;
 
             // se ci sono elementi selezionati => è una modifica
             ListViewItem item;
@@ -309,18 +308,19 @@ namespace SelfDC
 
                 if (txtQta.Text == "")
                 {
-                    //txtQta.Text = "1";
                     txtQta.Focus();
                     return;
                 }
                 item.SubItems.Add(txtQta.Text);
 
                 listBox.Items.Add(item);
+                ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + item.Text);
             }
 
             this.statusBar.Text = string.Format("{0} record", listBox.Items.Count);
 
             // pulisco e disabilito i campi
+            ItemValid = false;
             actFieldReset();
         }
 
@@ -459,6 +459,11 @@ namespace SelfDC
                 // formatto il numero
                 txtQta.Text = string.Format("{0:#0.000}", Num);
             }
+        }
+
+        private void txtQta_Validated(object sender, EventArgs e)
+        {
+            ItemValid = true;
         }
     }
 }

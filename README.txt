@@ -2,6 +2,10 @@ Self DataColletor (SelfDC)
 ==========================
 
 ##> Versione 0.0.5
+(build 32648 del 18.11.2014)
+Risolto problema su inserimento dato QTA con formato sbagliato (ISSUE 3 su GitHub).
+Inserito caricamento logo da file immagine "app.png"
+
 (build 29821 del 17.11.2014)
 Forzata validazione del campo QTA anche dietro pressione del tasto ENTER.
 Aggiunta selezione del testo nel campo QTA durante l'editing del campo sulle finestre Ordini, Etichette e Inventario.

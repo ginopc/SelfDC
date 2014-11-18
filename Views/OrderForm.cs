@@ -11,6 +11,7 @@ namespace SelfDC
     public partial class OrderForm : Form
     {
         bool ItemEdit = false;
+        bool ItemValid = false;
         private List<OrderItem> listaProdotti;
         private IDevice bcReader;
 
@@ -66,7 +67,7 @@ namespace SelfDC
                 cbCodInterno.Checked = false;
                 txtCode.Text = code;
             }
-            txtQta.Text = "1";
+            // txtQta.Text = "1";
 
             actSave(bcReader, null);
         }
@@ -273,11 +274,6 @@ namespace SelfDC
                 return;
             }
 
-            // disabilito i campi x evitare modifiche durante il salvataggio
-            txtCode.Enabled = false;
-            txtQta.Enabled = false;
-            cbCodInterno.Enabled = false;
-
             // se ci sono elementi selezionati => è una modifica
             ListViewItem item;
             if ((listBox.SelectedIndices.Count > 0) && ItemEdit)
@@ -287,6 +283,8 @@ namespace SelfDC
                     item.SubItems[1].Text = txtCode.Text; // cod interno
                 else
                     item.Text = txtCode.Text; // ean
+
+                if (!ItemValid) return;
                 item.SubItems[2].Text = txtQta.Text; // qta
                 ItemEdit = false;
             }
@@ -304,15 +302,23 @@ namespace SelfDC
                     item.SubItems.Add("");
                 }
 
-                if (txtQta.Text == "") txtQta.Text = "1";
+                if (txtQta.Text == "")
+                {
+                    txtQta.Text = "1";
+                    ItemValid = true;
+                }
                 item.SubItems.Add(txtQta.Text);
 
+                // se la quantità non è valida annulla il salvataggio
+                if (!ItemValid) return;
                 listBox.Items.Add(item);
+                ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + item.Text);
             }
 
             this.statusBar.Text = string.Format("{0} record", listBox.Items.Count);
 
             // pulisco e disabilito i campi
+            ItemValid = false;
             actFieldReset();
         }
 
@@ -353,22 +359,27 @@ namespace SelfDC
         private void txtQta_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
-                actSave(sender, e);
+            {
+                // cambio il focus per forzare la validazione del campo
+                listBox.Focus();
 
-                
+                // Chiamo l'azione di salvataggio dati
+                actSave(sender, e);
+            }
         }
 
         private void txtCode_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
+                // Chiamo l'azione di salvataggio dati
                 actSave(sender, e);
         }
 
         private void cbCodInterno_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
+                // Chiamo l'azione di salvataggio dati
                 actSave(sender, e);
-
         }
 
         /** richiesta chiusura */
@@ -433,6 +444,11 @@ namespace SelfDC
                 // formatto il numero
                 txtQta.Text = string.Format("{0:#0}", Num);
             }
+        }
+
+        private void txtQta_Validated(object sender, EventArgs e)
+        {
+            ItemValid = true;
         }
     }
 }

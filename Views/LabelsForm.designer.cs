@@ -30,8 +30,8 @@
         {
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label2;
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem();
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem();
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem();
             this.statusBar = new System.Windows.Forms.StatusBar();
             this.contextMenu = new System.Windows.Forms.ContextMenu();
             this.cmnuRemove = new System.Windows.Forms.MenuItem();
@@ -217,6 +217,7 @@
             this.txtQta.Size = new System.Drawing.Size(58, 23);
             this.txtQta.TabIndex = 1;
             this.txtQta.Text = "123.12";
+            this.txtQta.Validated += new System.EventHandler(this.txtQta_Validated);
             this.txtQta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQta_KeyPress);
             this.txtQta.Validating += new System.ComponentModel.CancelEventHandler(this.txtQta_Validating);
             // 
@@ -237,14 +238,14 @@
             this.listBox.ContextMenu = this.contextMenu;
             this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox.FullRowSelect = true;
-            listViewItem3.Text = "123456789012";
-            listViewItem3.SubItems.Add("");
-            listViewItem3.SubItems.Add("10");
-            listViewItem4.Text = "";
-            listViewItem4.SubItems.Add("123456");
-            listViewItem4.SubItems.Add("15");
-            this.listBox.Items.Add(listViewItem3);
-            this.listBox.Items.Add(listViewItem4);
+            listViewItem1.Text = "123456789012";
+            listViewItem1.SubItems.Add("");
+            listViewItem1.SubItems.Add("10");
+            listViewItem2.Text = "";
+            listViewItem2.SubItems.Add("123456");
+            listViewItem2.SubItems.Add("15");
+            this.listBox.Items.Add(listViewItem1);
+            this.listBox.Items.Add(listViewItem2);
             this.listBox.Location = new System.Drawing.Point(0, 86);
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(314, 209);
