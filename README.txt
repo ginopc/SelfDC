@@ -1,6 +1,10 @@
 Self DataColletor (SelfDC)
 ==========================
 
+##> Versione 0.0.6
+(build 31841 del 20.11.2014)
+Inserita versione automatica nella maschera MainForm
+
 ##> Versione 0.0.5
 (build 32648 del 18.11.2014)
 Risolto problema su inserimento dato QTA con formato sbagliato (ISSUE 3 su GitHub).
