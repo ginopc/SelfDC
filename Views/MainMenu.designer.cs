@@ -181,18 +181,21 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.lblTitle);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(544, 0);
+            this.panel1.Location = new System.Drawing.Point(498, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(96, 45);
+            this.panel1.Size = new System.Drawing.Size(142, 45);
             // 
             // lblTitle
             // 
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblTitle.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblTitle.Location = new System.Drawing.Point(0, 25);
+            this.lblTitle.Location = new System.Drawing.Point(0, 28);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(96, 17);
+            this.lblTitle.Size = new System.Drawing.Size(142, 17);
             this.lblTitle.Text = "Self DC v. 0.0.5";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblTitle.ParentChanged += new System.EventHandler(this.lblTitle_ParentChanged);
             // 
             // MainMenu
             // 
