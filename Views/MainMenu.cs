@@ -156,5 +156,11 @@ namespace SelfDC.Views
         {
 
         }
+
+        private void MainMenu_Closed(object sender, EventArgs e)
+        {
+            // In chiusura salvo la configurazione
+            Settings.SaveToFile(Settings.AppCfgFileName);
+        }
     }
 }

@@ -18,29 +18,27 @@ namespace SelfDC
         /** costruttore della classe */
         public OrderForm()
         {
+            // Imposto i controlli
             InitializeComponent();
-            txtCode.Text = "";
-            txtQta.Text = "";
+            actFieldReset();
             listBox.Items.Clear();
+            this.statusBar.Text = "Nessun Record";
 
             listaProdotti = new List<OrderItem>();
 
-            // Crea l'oggetto del lettore scanner
-            if (Settings.TipoTerminale == "DL")
-                this.bcReader = new Datalogic();
-            else
-                this.bcReader = new Motorola();
-            this.bcReader.OnScan += new EventHandler(this.bcReader_OnScan);
+            // Crea l'oggetto del Scanner di Barcode (Default: Motorola)
+            this.bcReader = ScsUtils.bcReader;
 
-            ScsUtils.WriteLog("Creazione maschera " + this.Name);
+            ScsUtils.WriteLog("Creata maschera " + this.Name);
         }
+
 
         private void OrderForm_Load(object sender, EventArgs e)
         {
             ScsUtils.WriteLog("Caricamento maschera " + this.Name);
+
             // Imposto la maschera a tutto schermo
             this.WindowState = FormWindowState.Maximized;
-            this.statusBar.Text = "Nessun Record";
 
             // server per il debug sull'emulatore
             if (System.Environment.OSVersion.Platform.ToString() == "WinCE")
@@ -77,6 +75,7 @@ namespace SelfDC
         {
             int index = listBox.SelectedIndices[0];
             ListViewItem item = listBox.Items[index];
+            OrderItem oItem = new OrderItem();
 
             ScsUtils.WriteLog(string.Format("In {0}, modifica della riga {1}", this.Name, index.ToString()));
 
@@ -398,11 +397,6 @@ namespace SelfDC
         /** dopo conferma chiusura */
         private void OrderForm_Closed(object sender, EventArgs e)
         {
-            // Salvo le impostazioni
-            Settings.SaveToFile(Settings.AppCfgFileName);
-
-            // TODO: se esiste un ordine in fase di compilazione lo esporto su un file temporaneo
-
             // Prima di chiudere disabilito lo scanner
             if (System.Environment.OSVersion.Platform.ToString() == "WinCE")
                 if (bcReader.Enabled) bcReader.Close();
@@ -412,6 +406,7 @@ namespace SelfDC
         private void OrderForm_Activated(object sender, EventArgs e)
         {
             ScsUtils.WriteLog(string.Format("Maschera {0} attivata", this.Name));
+            this.bcReader.OnScan += new EventHandler(this.bcReader_OnScan);
             bcReader.Open();
         }
 
@@ -419,6 +414,7 @@ namespace SelfDC
         {
             ScsUtils.WriteLog(string.Format("Maschera {0} disattivata", this.Name));
             bcReader.Close();
+            this.bcReader.OnScan -= new EventHandler(this.bcReader_OnScan);
         }
 
         /* valida il contenuto della casella quantità */

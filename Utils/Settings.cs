@@ -36,13 +36,16 @@ namespace SelfDC.Utils
         /// </summary>
         public static void SaveToFile(string FileName)
         {
-            StreamWriter sw = new StreamWriter(FileName);
-            sw.WriteLine(CodiceCliente);
-            sw.WriteLine(OrdineFileName);
-            sw.WriteLine(InventarioFilename);
-            sw.WriteLine(EtichettaFilename);
-            sw.WriteLine(TipoTerminale);
-            sw.Close();
+            if (!File.Exists(FileName))
+            {
+                StreamWriter sw = new StreamWriter(FileName);
+                sw.WriteLine(CodiceCliente);
+                sw.WriteLine(OrdineFileName);
+                sw.WriteLine(InventarioFilename);
+                sw.WriteLine(EtichettaFilename);
+                sw.WriteLine(TipoTerminale);
+                sw.Close();
+            }
         }
     }
 }

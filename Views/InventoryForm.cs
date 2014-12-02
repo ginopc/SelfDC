@@ -12,7 +12,7 @@ namespace SelfDC
     {
         bool ItemEdit = false;
         bool ItemValid = false;
-        private List<OrderItem> listaProdotti;
+        private List<InventoryItem> listaProdotti;
         private IDevice bcReader;
 
         /** costruttore della classe */
@@ -23,14 +23,10 @@ namespace SelfDC
             txtQta.Text = "";
             listBox.Items.Clear();
 
-            listaProdotti = new List<OrderItem>();
+            listaProdotti = new List<InventoryItem>();
 
             // Crea l'oggetto del lettore scanner
-            if (Settings.TipoTerminale == "DL")
-                this.bcReader = new Datalogic();
-            else
-                this.bcReader = new Motorola();
-            this.bcReader.OnScan += new EventHandler(this.bcReader_OnScan);
+            this.bcReader = ScsUtils.bcReader;
 
             ScsUtils.WriteLog("Creazione maschera " + this.Name);
         }
@@ -208,12 +204,12 @@ namespace SelfDC
                 if (res == DialogResult.No) return;
             }
 
-            Order ordine = new Order();
+            Inventory inventario = new Inventory();
             foreach (ListViewItem item in listBox.Items)
             {
-                ordine.Add(new OrderItem(item.Text, item.SubItems[1].Text, Convert.ToInt32(item.SubItems[2].Text)));
+                inventario.Add(new InventoryItem(item.Text, item.SubItems[1].Text, Convert.ToDouble(item.SubItems[2].Text)));
             }
-            if (ordine.ToFile(Settings.InventarioFilename) < 0)
+            if (inventario.ToFile(Settings.InventarioFilename) < 0)
             {
                 return;
             }
@@ -228,12 +224,16 @@ namespace SelfDC
         /** Abilita menu di modifica solo se è selezionata un riga della lista */
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Disabilito a priori i campi di input
+            txtCode.Enabled = false;
+            txtQta.Enabled = false;
+            cbCodInterno.Enabled = false;
+            btnSave.Enabled = false;
+
             if ((listBox.Items.Count == 0) || (listBox.SelectedIndices.Count == 0))
             {
-                txtCode.Enabled = false;
-                txtQta.Enabled = false;
-                cbCodInterno.Enabled = false;
-                btnSave.Enabled = false;
+                txtCode.Text = "";
+                txtQta.Text = "";
                 return;
             }
 
@@ -424,6 +424,7 @@ namespace SelfDC
         private void InventoryForm_Activated(object sender, EventArgs e)
         {
             ScsUtils.WriteLog(string.Format("Maschera {0} attivata", this.Name));
+            this.bcReader.OnScan += new EventHandler(this.bcReader_OnScan);
             bcReader.Open();
         }
 
@@ -431,6 +432,7 @@ namespace SelfDC
         {
             ScsUtils.WriteLog(string.Format("Maschera {0} disattivata", this.Name));
             bcReader.Close();
+            this.bcReader.OnScan -= new EventHandler(this.bcReader_OnScan);
         }
 
         private void txtQta_Validating(object sender, CancelEventArgs e)

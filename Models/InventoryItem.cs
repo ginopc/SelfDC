@@ -1,34 +1,34 @@
 ﻿
 namespace SelfDC.Models
 {
-    public class OrderItem
+    public class InventoryItem
     {
         public string productCode { get; set; }
         public string barcode { get; set; }
-        public int qta { get; set; }
+        public double qta { get; set; }
 
-        public OrderItem()
+        public InventoryItem()
         {
             this.productCode = "";
             this.barcode = "";
             this.qta = 0;
         }
 
-        public OrderItem(string productCode, string barcode, int qta)
+        public InventoryItem(string productCode, string barcode, double qta)
         {
             this.productCode = productCode;
             this.barcode = barcode;
             this.qta = qta;
         }
 
-        public OrderItem(string productCode, int qta)
+        public InventoryItem(string productCode, double qta)
         {
             this.productCode = productCode;
             this.barcode = "";
             this.qta = qta;
         }
 
-        public OrderItem(string productCode)
+        public InventoryItem(string productCode)
         {
             this.productCode = productCode;
             this.barcode = "";

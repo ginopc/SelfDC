@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Inventory.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\LabelItem.cs" />
     <Compile Include="Utils\Utils.cs" />

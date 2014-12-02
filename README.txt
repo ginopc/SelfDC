@@ -2,10 +2,13 @@ Self DataColletor (SelfDC)
 ==========================
 
 ##> Versione 0.0.6
+(build 22803 del 02.12.2014)
+Correzione bug. 
+
+##> Versione 0.0.5
 (build 31841 del 20.11.2014)
 Inserita versione automatica nella maschera MainForm
 
-##> Versione 0.0.5
 (build 32648 del 18.11.2014)
 Risolto problema su inserimento dato QTA con formato sbagliato (ISSUE 3 su GitHub).
 Inserito caricamento logo da file immagine "app.png"
@@ -13,6 +16,9 @@ Inserito caricamento logo da file immagine "app.png"
 (build 29821 del 17.11.2014)
 Forzata validazione del campo QTA anche dietro pressione del tasto ENTER.
 Aggiunta selezione del testo nel campo QTA durante l'editing del campo sulle finestre Ordini, Etichette e Inventario.
+
+(build 29805 del 17.11.2014)
+Correzione problema Datalogic su assegnazione Evento OnSCan di maschere differenti
 
 (build 28512 del 14.11.2014)
 Corretta dicitura su esportazione etichette "Esporta Ordine".

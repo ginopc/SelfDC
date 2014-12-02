@@ -27,11 +27,7 @@ namespace SelfDC.Views
             listaProdotti = new List<LabelItem>();
 
             // Crea l'oggetto del lettore scanner
-            if (Settings.TipoTerminale == "DL")
-                this.bcReader = new Datalogic();
-            else
-                this.bcReader = new Motorola();
-            this.bcReader.OnScan += new EventHandler(this.bcReader_OnScan);
+            this.bcReader = ScsUtils.bcReader;
             
             ScsUtils.WriteLog("Creazione maschera " + this.Name);
         }
@@ -442,6 +438,7 @@ namespace SelfDC.Views
             // serve per il debug sull'emulatore
             if (System.Environment.OSVersion.Platform.ToString() == "WinCE")
             {
+                this.bcReader.OnScan += new EventHandler(this.bcReader_OnScan);
                 bcReader.Open();
             }
         }
@@ -450,6 +447,7 @@ namespace SelfDC.Views
         {
             ScsUtils.WriteLog("Maschera " + this.Name + " disattivata");
             bcReader.Close();
+            this.bcReader.OnScan -= new EventHandler(this.bcReader_OnScan);
         }
 
         private void txtQta_Validating(object sender, CancelEventArgs e)

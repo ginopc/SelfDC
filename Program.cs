@@ -23,6 +23,13 @@ namespace SelfDC
             Settings.AppCfgFileName = string.Format("{0}\\conf.txt", ScsUtils.GetAppPath());
             Settings.LoadFromFile(Settings.AppCfgFileName);
 
+            /* Crea l'oggetto per lo scanner barcode */
+            ScsUtils.WriteLog("Inizializzazione scanner (Tipo Term: " + Settings.TipoTerminale);
+            if (Settings.TipoTerminale == "DL")
+                ScsUtils.bcReader = new Datalogic();
+            else
+                ScsUtils.bcReader = new Motorola();
+
             /* show main form */
             Application.Run(new SelfDC.Views.MainMenu());
 
