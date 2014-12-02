@@ -229,12 +229,11 @@ namespace SelfDC.Views
         /** Abilita menu di modifica solo se è selezionata un riga della lista */
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // disabilito a prescindere i campi di input. Verranno riabilitati più avanti nella fuzione
+            actFieldReset();
+
             if ((listBox.Items.Count == 0) || (listBox.SelectedIndices.Count == 0))
             {
-                txtCode.Enabled = false;
-                txtQta.Enabled = false;
-                cbCodInterno.Enabled = false;
-                btnSave.Enabled = false;
                 return;
             }
 

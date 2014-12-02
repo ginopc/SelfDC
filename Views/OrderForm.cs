@@ -6,7 +6,7 @@ using SelfDC.Models;
 using SelfDC.Utils;
 using System.IO;
 
-namespace SelfDC
+namespace SelfDC.Views
 {
     public partial class OrderForm : Form
     {
@@ -224,12 +224,11 @@ namespace SelfDC
         /** Abilita menu di modifica solo se è selezionata un riga della lista */
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // disabilito a prescindere i campi. Verranno abilitati di seguito nella funzione
+            actFieldReset();
+
             if ((listBox.Items.Count == 0) || (listBox.SelectedIndices.Count == 0))
             {
-                txtCode.Enabled = false;
-                txtQta.Enabled = false;
-                cbCodInterno.Enabled = false;
-                btnSave.Enabled = false;
                 return;
             }
 

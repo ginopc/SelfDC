@@ -2,8 +2,9 @@ Self DataColletor (SelfDC)
 ==========================
 
 ##> Versione 0.0.6
-(build 22803 del 02.12.2014)
-Correzione bug. 
+(build 23637 del 02.12.2014)
+Correzione bug su esportazione Inventario
+Correzione bug OrderForm, LabelForm, InventoryForm: tutti i campi abilitati su modifica riga, dopo nuovo inserimento non terminato.
 
 ##> Versione 0.0.5
 (build 31841 del 20.11.2014)

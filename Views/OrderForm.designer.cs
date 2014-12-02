@@ -1,4 +1,4 @@
-﻿namespace SelfDC
+﻿namespace SelfDC.Views
 {
     partial class OrderForm
     {
