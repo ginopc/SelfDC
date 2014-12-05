@@ -217,9 +217,7 @@
             this.txtQta.Size = new System.Drawing.Size(58, 23);
             this.txtQta.TabIndex = 1;
             this.txtQta.Text = "123.12";
-            this.txtQta.Validated += new System.EventHandler(this.txtQta_Validated);
             this.txtQta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQta_KeyPress);
-            this.txtQta.Validating += new System.ComponentModel.CancelEventHandler(this.txtQta_Validating);
             // 
             // txtCode
             // 

@@ -8,7 +8,7 @@ namespace SelfDC.Utils
     public static class ScsUtils
     {
         public static IDevice bcReader;
-
+/*
         public static int EsportaOrdine(List<OrderItem> Items, string FileName)
         {
             int result = -1;
@@ -76,7 +76,7 @@ namespace SelfDC.Utils
 
             return result;
         }
-
+*/
         /// <summary>
         /// Write log message into log file
         /// </summary>

@@ -11,7 +11,6 @@ namespace SelfDC.Views
     public partial class InventoryForm : Form
     {
         bool ItemEdit = false;
-        bool ItemValid = false;
         private List<InventoryItem> listaProdotti;
         private IDevice bcReader;
 
@@ -118,13 +117,13 @@ namespace SelfDC.Views
         {
             if (listBox.Items.Count == 0)
             {
-                MessageBox.Show("Non ci sono righe da esportare", "Elimina Riga",
+                MessageBox.Show("Non ci sono righe da eliminare", "Elimina Riga",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
             if (listBox.SelectedIndices.Count == 0)
             {
-                MessageBox.Show("Seleziona l'elemento da eliminare","Elimina Riga");
+                MessageBox.Show("Seleziona l'elemento da eliminare", "Elimina Riga");
                 return;
             }
 
@@ -265,6 +264,8 @@ namespace SelfDC.Views
         /** Salva modifica */
         private void actSave(object sender, EventArgs e)
         {
+            bool ItemValid = false;
+
             if (txtCode.Text == "")
             {
                 MessageBox.Show("Niente da inserire", "Salva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -272,8 +273,14 @@ namespace SelfDC.Views
                 return;
             }
 
+            ItemValid = Validate();
+
             // se la qta non è un dato valido annulla il salvataggio
-            if (!ItemValid) return;
+            if (!ItemValid)
+            {
+                txtQta.Focus();
+                return;
+            }
 
             // se ci sono elementi selezionati => è una modifica
             ListViewItem item;
@@ -286,6 +293,7 @@ namespace SelfDC.Views
                     item.Text = txtCode.Text; // ean
                 item.SubItems[2].Text = txtQta.Text; // qta
                 ItemEdit = false;
+                ScsUtils.WriteLog("In " + this.Name + ", salvataggio modifiche alla riga " + txtCode.Text);
             }
             else // Nuovo inserimento manuale
             {
@@ -309,13 +317,12 @@ namespace SelfDC.Views
                 item.SubItems.Add(txtQta.Text);
 
                 listBox.Items.Add(item);
-                ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + item.Text);
+                ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + txtCode.Text);
             }
 
             this.statusBar.Text = string.Format("{0} record", listBox.Items.Count);
 
             // pulisco e disabilito i campi
-            ItemValid = false;
             actFieldReset();
         }
 
@@ -427,18 +434,20 @@ namespace SelfDC.Views
         {
             ScsUtils.WriteLog(string.Format("Maschera {0} disattivata", this.Name));
             bcReader.Close();
-            this.bcReader.OnScan -= new EventHandler(this.bcReader_OnScan);
+            if (!Visible)
+                this.bcReader.OnScan -= new EventHandler(this.bcReader_OnScan);
+
         }
 
-        private void txtQta_Validating(object sender, CancelEventArgs e)
+        /* valida i dati inseriti nei campi di input */
+        private bool Validate()
         {
             double Num;
 
             // Se non c'è testo esco
-            if (txtQta.Text.Trim().Length == 0)
+            if ((txtCode.Text.Trim().Length == 0) && (txtQta.Text.Trim().Length == 0))
             {
-                e.Cancel = true;
-                return;
+                return false;
             }
 
             try
@@ -448,19 +457,15 @@ namespace SelfDC.Views
             catch (FormatException ex)
             {
                 MessageBox.Show("Errore nel campo Q.ta");
-                e.Cancel = true;
-                return;
+                return false;
             }
             if (Num > 0)
             {
                 // formatto il numero
                 txtQta.Text = string.Format("{0:#0.000}", Num);
             }
-        }
 
-        private void txtQta_Validated(object sender, EventArgs e)
-        {
-            ItemValid = true;
+            return true;
         }
     }
 }

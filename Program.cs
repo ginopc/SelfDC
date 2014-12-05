@@ -3,19 +3,23 @@ using System.Windows.Forms;
 using SelfDC.Utils;
 using System.Reflection;
 using SelfDC.Views;
+using System.Threading;
+using System.Diagnostics;
 
 namespace SelfDC
 {
     static class Program
     {
+        static string appName = Assembly.GetExecutingAssembly().GetName().Name;
+        static string appVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        static string appGuid = "abf2a777-ace8-40f3-a0ff-0aac712264c5";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [MTAThread]
         static void Main()
         {
-            String appName = Assembly.GetExecutingAssembly().GetName().Name;
-            String appVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             /* Load app settings */
             ScsUtils.WriteLog(string.Format("=== {0} ver. {1} ===", appName, appVersion));

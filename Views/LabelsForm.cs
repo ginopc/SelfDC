@@ -12,7 +12,6 @@ namespace SelfDC.Views
     public partial class LabelsForm : Form
     {
         bool ItemEdit = false;
-        bool ItemValid = false;
         private List<LabelItem> listaProdotti;
         private IDevice bcReader;
 
@@ -114,7 +113,7 @@ namespace SelfDC.Views
         {
             if (listBox.Items.Count == 0)
             {
-                MessageBox.Show("Non ci sono righe da esportare", "Elimina Riga",
+                MessageBox.Show("Non ci sono righe da eliminare", "Elimina Riga",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
@@ -270,6 +269,8 @@ namespace SelfDC.Views
         /** Salva modifica */
         private void actSave(object sender, EventArgs e)
         {
+            bool ItemValid = false;
+
             if (txtCode.Text == "")
             {
                 MessageBox.Show("Niente da inserire", "Salva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -291,10 +292,10 @@ namespace SelfDC.Views
                 item.SubItems[2].Text = txtQta.Text; // qta
                 ItemEdit = false;
 
-                // nuovo inserimento con OrderItem
+                // nuovo inserimento con LabelItem
                 LabelItem newItem = new LabelItem(item.Text, item.SubItems[1].Text, Convert.ToInt32(item.SubItems[2].Text));
 
-                ScsUtils.WriteLog("In " + this.Name + ", salvataggio modifiche alla riga " + item.Text);
+                ScsUtils.WriteLog("In " + this.Name + ", salvataggio modifiche alla riga " + txtCode.Text);
             }
             else // Nuovo inserimento manuale
             {
@@ -312,21 +313,19 @@ namespace SelfDC.Views
 
                 if (txtQta.Text == "")
                 {
-                    ItemValid = true;
                     txtQta.Text = "1";
                 }
                 item.SubItems.Add(txtQta.Text);
 
                 // se la quantità non è valida annulla il salvataggio
-                if (!ItemValid) return;
+                if (!Validate()) return;
                 listBox.Items.Add(item);
-                ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + item.Text);
+                ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + txtCode.Text);
             }
 
             this.statusBar.Text = string.Format("{0} record", listBox.Items.Count);
 
             // pulisco e disabilito i campi
-            ItemValid = false;
             actFieldReset();
         }
 
@@ -449,12 +448,16 @@ namespace SelfDC.Views
             this.bcReader.OnScan -= new EventHandler(this.bcReader_OnScan);
         }
 
-        private void txtQta_Validating(object sender, CancelEventArgs e)
+        private bool Validate()
         {
             double Num;
 
             // Se non c'è testo esco
-            if (txtQta.Text.Trim().Length == 0) return;
+            if (txtCode.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Inserire il codice");
+                return false;
+            }
 
             try
             {
@@ -463,19 +466,15 @@ namespace SelfDC.Views
             catch (FormatException ex)
             {
                 MessageBox.Show("Errore nel campo Q.ta");
-                e.Cancel = true;
-                return;
+                return false;
             }
             if (Num > 0)
             {
                 // formatto il numero
                 txtQta.Text = string.Format("{0:#0}", Num);
             }
-        }
 
-        private void txtQta_Validated(object sender, EventArgs e)
-        {
-            ItemValid = true;
+            return true;
         }
     }
 }
