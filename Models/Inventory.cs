@@ -89,7 +89,7 @@ namespace SelfDC.Models
                         , Settings.CodiceCliente
                         , item.productCode
                         , item.barcode
-                        , item.qta);
+                        , (int) (item.qta*1000));
                 sw.WriteLine(line);
                 result++;
             }
