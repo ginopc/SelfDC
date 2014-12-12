@@ -1,6 +1,11 @@
 Self DataColletor (SelfDC)
 ==========================
 
+#> Versione 0.0.8
+(build 20004 del 12.12.2014)
+Modificato il formato di esportazione dell'inventario. La QTA è formattata con 3 decimali senza virgola (#0000)
+
+
 ##> Versione 0.0.7
 Eliminate da Utils le funzioni di esportazione file Ordini e etichette perchè non più usate.
 correzione bug
