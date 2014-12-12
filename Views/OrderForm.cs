@@ -354,11 +354,13 @@ namespace SelfDC.Views
 
         private void txtQta_KeyPress(object sender, KeyPressEventArgs e)
         {
+            // Verifico se il carattere è un numero altrimenti annullo l'inserimento
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                e.Handled = true;
+
+
             if (e.KeyChar == 13)
             {
-                // cambio il focus per forzare la validazione del campo
-                listBox.Focus();
-
                 // Chiamo l'azione di salvataggio dati
                 actSave(sender, e);
             }
