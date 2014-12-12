@@ -2,7 +2,7 @@ Self DataColletor (SelfDC)
 ==========================
 
 #> Versione 0.0.8
-(build 20004 del 12.12.2014)
+(build 21019 del 12.12.2014)
 Modificato il formato di esportazione dell'inventario. La QTA è formattata con 3 decimali senza virgola (#0000)
 
 
