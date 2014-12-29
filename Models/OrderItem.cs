@@ -1,6 +1,12 @@
-﻿
+﻿/**
+ * Rappresent order collection item
+ * 
+ * @author  Maurizio Aru
+ * @date  : 25.04.2014
+ * 
+ */
 namespace SelfDC.Models
-{
+{   
     public class OrderItem
     {
         public string productCode { get; set; }
@@ -37,7 +43,7 @@ namespace SelfDC.Models
 
         public override string ToString()
         {
-            return string.Format("{0,7} | {1,13} | {2,3}", this.productCode, this.barcode, this.qta);
+            return string.Format("{0,7};{1,13};{2,3}", this.productCode, this.barcode, this.qta);
         }
     }
 }

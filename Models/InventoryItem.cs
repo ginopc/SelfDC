@@ -1,4 +1,10 @@
-﻿
+﻿/**
+ * Rappresent inventory collection item detail
+ * 
+ * @author  Maurizio Aru
+ * @date  : 25.04.2014
+ * 
+ */
 namespace SelfDC.Models
 {
     public class InventoryItem

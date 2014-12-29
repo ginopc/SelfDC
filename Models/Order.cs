@@ -1,6 +1,12 @@
-﻿using System;
+﻿/**
+ * Rappresent order data head, with customer reference
+ * 
+ * @author  Maurizio Aru
+ * @date  : 25.04.2014
+ * 
+ */
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using SelfDC.Utils;
 
@@ -9,24 +15,23 @@ namespace SelfDC.Models
     public class Order
     {
         /// <summary>
-        /// Lista degli elementi dell'ordine
+        /// Customer code
         /// </summary>
-        private List<OrderItem> Items;
+        public string Customer { get; set;}
 
-        public Order()
+        /// <summary>
+        /// Order detail items
+        /// </summary>
+        public List<OrderItem> Items;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="customer">Customer code</param>
+        public Order(string customer)
         {
+            this.Customer = customer;
             this.Items = new List<OrderItem>();
-        }
-
-        public string Customer
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
         }
 
         /// <summary>

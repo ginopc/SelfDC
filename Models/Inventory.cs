@@ -1,4 +1,11 @@
-﻿using System;
+﻿/**
+ * Rappresent inventory head, with customer reference
+ * 
+ * @author  Maurizio Aru
+ * @date  : 25.04.2014
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
