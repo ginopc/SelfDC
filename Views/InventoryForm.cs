@@ -185,7 +185,7 @@ namespace SelfDC.Views
             // User confirm?
             DialogResult res = MessageBox.Show(
                         "Vuoi esportare il file?", 
-                        "Esporta Ordine", 
+                        "Esporta Inventario", 
                         MessageBoxButtons.YesNo, 
                         MessageBoxIcon.Question, 
                         MessageBoxDefaultButton.Button1);
