@@ -1,4 +1,11 @@
-﻿using System;
+﻿/**
+ * Utils class
+ * 
+ * @author  Maurizio Aru
+ * @date  : 25.04.2014
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using SelfDC.Models;

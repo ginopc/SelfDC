@@ -1,4 +1,11 @@
-﻿using System.IO;
+﻿/**
+ * Manage app settings
+ * 
+ * @author  Maurizio Aru
+ * @date  : 25.04.2014
+ * 
+ */
+using System.IO;
 
 namespace SelfDC.Utils
 {
