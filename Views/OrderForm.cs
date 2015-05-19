@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using SelfDC.Models;
 using SelfDC.Utils;
 using System.IO;
+// using System.Runtime.Serialization;
 
 namespace SelfDC.Views
 {
@@ -13,6 +14,10 @@ namespace SelfDC.Views
         bool ItemEdit = false;
         private List<OrderItem> listaProdotti;
         private IDevice bcReader;
+
+        // per la serializzazione
+        private string FileName = @"order.tmp";
+        private Order myOrder;
 
         /** costruttore della classe */
         public OrderForm()
@@ -24,6 +29,7 @@ namespace SelfDC.Views
             this.statusBar.Text = "Nessun Record";
 
             listaProdotti = new List<OrderItem>();
+            this.myOrder = new Order(Settings.CodiceCliente);
 
             // Crea l'oggetto del Scanner di Barcode (Default: Motorola)
             this.bcReader = ScsUtils.bcReader;
@@ -44,59 +50,10 @@ namespace SelfDC.Views
                 bcReader.Open();
         }
 
-        private void bcReader_OnScan(object sender, EventArgs e)
-        {
-            ScsUtils.WriteLog(string.Format("Evento {0}.OnScan chiamato da {1}", this.Name, sender.GetType().Name));
-            String code = bcReader.Barcode;
-            if (code == null) return;
+        #region Actions
+        /************************************/
 
-            actNew(bcReader, null);
-
-            if (code.StartsWith("$"))
-            {
-                // codice interno
-                cbCodInterno.Checked = true;
-                txtCode.Text = code.Substring(1, 7);
-            }
-            else
-            {
-                // codice ean
-                cbCodInterno.Checked = false;
-                txtCode.Text = code;
-            }
-            // txtQta.Text = "1";
-
-            actSave(bcReader, null);
-        }
-
-        /** modifica l'elemento selezionato */
-        private void actEdit(object sender, EventArgs e)
-        {
-            int index = listBox.SelectedIndices[0];
-            ListViewItem item = listBox.Items[index];
-            OrderItem oItem = new OrderItem();
-
-            ScsUtils.WriteLog(string.Format("In {0}, modifica della riga {1}", this.Name, index.ToString()));
-
-            if (item.Text == "")
-            {
-                cbCodInterno.Checked = true;
-                txtCode.Text = item.SubItems[1].Text;
-            }
-            else
-            {
-                cbCodInterno.Checked = false;
-                txtCode.Text = listBox.Items[index].Text;
-            }
-            // blocco la checkbox
-            cbCodInterno.Enabled = false;
-
-            txtQta.Text = listBox.Items[index].SubItems[2].Text;
-            txtQta.Focus();
-            txtQta.Select(0, txtQta.Text.Length);
-        }
-
-        /** Inizia un nuovo inserimento manuale */
+        /** start manual insert */
         private void actNew(object sender, EventArgs e)
         {
             ScsUtils.WriteLog("In " + this.Name + ", inserimento nuova riga");
@@ -113,7 +70,39 @@ namespace SelfDC.Views
             txtCode.Focus();
         }
 
-        /** Elimina l'elemento selezionato */
+        /** edit selectet item */
+        private void actEdit(object sender, EventArgs e)
+        {
+            int index = listBox.SelectedIndices[0];
+            ListViewItem item = listBox.Items[index];
+            OrderItem oItem = myOrder.Items[index];
+
+            ScsUtils.WriteLog(string.Format("In {0}, modifica della riga {1}", this.Name, index.ToString()));
+
+            txtCode.Text = (oItem.productCode.Trim().Length > 0) ? oItem.productCode : oItem.barcode;
+            cbCodInterno.Checked = (oItem.productCode.Trim().Length > 0);
+            /*
+            if (item.Text == "")
+            {
+                cbCodInterno.Checked = true;
+                txtCode.Text = item.SubItems[1].Text;
+            }
+            else
+            {
+                cbCodInterno.Checked = false;
+                txtCode.Text = listBox.Items[index].Text;
+            }
+             */ 
+            // enable checkbox
+            cbCodInterno.Enabled = false;
+
+            // txtQta.Text = listBox.Items[index].SubItems[2].Text;
+            txtQta.Text = oItem.qta.ToString();
+            txtQta.Focus();
+            txtQta.Select(0, txtQta.Text.Length);
+        }
+
+        /** delete selected item */
         private void actRemove(object sender, EventArgs e)
         {
             if (listBox.Items.Count == 0)
@@ -145,27 +134,83 @@ namespace SelfDC.Views
             ScsUtils.WriteLog("In " + this.Name + ", eliminazione della riga " + item.Text);
         }
 
-        /*  Form Resize */
-        private void OrderForm_Resize(object sender, EventArgs e)
+        /** Salva modifica */
+        private void actSave(object sender, EventArgs e)
         {
-            double ctlWidth = (double)ClientSize.Width;
+            if (txtCode.Text == "")
+            {
+                MessageBox.Show("Niente da inserire", "Salva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                actFieldReset();
+                return;
+            }
 
-            /** Resize listBox */
-            listBox.Width = (int)ctlWidth;
-            listBox.Columns[0].Width = (int)(ctlWidth * 0.50);
-            listBox.Columns[1].Width = (int)(ctlWidth * 0.30);
-            listBox.Columns[1].Width = (int)(ctlWidth * 0.20);
+            // se ci sono elementi selezionati => è una modifica
+            ListViewItem item;
+            if ((listBox.SelectedIndices.Count > 0) && ItemEdit)
+            {
+                item = listBox.Items[listBox.SelectedIndices[0]];
+                if (cbCodInterno.Checked)
+                    item.SubItems[1].Text = txtCode.Text; // cod interno
+                else
+                    item.Text = txtCode.Text; // ean
 
-            ScsUtils.WriteLog("In " + this.Name + ", resize della finestra");
+                if (!Validate()) return;
+                item.SubItems[2].Text = txtQta.Text; // qta
+                ItemEdit = false;
+                ScsUtils.WriteLog("In " + this.Name + ", salvataggio modifiche alla riga " + txtCode.Text);
+            }
+            else // Nuovo inserimento manuale
+            {
+                item = new ListViewItem();
+                if (cbCodInterno.Checked)
+                {
+                    item.Text = "";
+                    item.SubItems.Add(txtCode.Text);
+                }
+                else
+                {
+                    item.Text = txtCode.Text;
+                    item.SubItems.Add("");
+                }
+
+                if (txtQta.Text == "")
+                {
+                    txtQta.Text = "1";
+                }
+                item.SubItems.Add(txtQta.Text);
+
+                // se la quantità non è valida annulla il salvataggio
+                if (!Validate()) return;
+                listBox.Items.Add(item);
+                ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + txtCode.Text);
+            }
+
+            this.statusBar.Text = string.Format("{0} record", listBox.Items.Count);
+
+            // pulisco e disabilito i campi
+            actFieldReset();
         }
 
+        /** Reimposta ai controlli della maschera */
+        private void actFieldReset()
+        {
+            txtCode.Text = "";
+            txtCode.Enabled = false;
+            txtQta.Text = "";
+            txtQta.Enabled = false;
+            cbCodInterno.Checked = true;
+            cbCodInterno.Enabled = false;
+            btnSave.Enabled = false;
+        }
+
+        /** quit from order collection */
         private void actQuit(object sender, EventArgs e)
         {
             bcReader.Close();
             this.Hide();
         }
 
-        /** Esporta la lista in un file */
+        /** export list into file */
         private void actExport(object sender, EventArgs e)
         {
             ScsUtils.WriteLog(string.Format("In {0}, esportazione dati su file {1}", this.Name, Settings.OrdineFileName));
@@ -175,7 +220,7 @@ namespace SelfDC.Views
             {
                 MessageBox.Show(
                     "Nessun dato da esportare"
-                    ,"ATTENZIONE!"
+                    , "ATTENZIONE!"
                     , MessageBoxButtons.OK
                     , MessageBoxIcon.Asterisk
                     , MessageBoxDefaultButton.Button1);
@@ -184,10 +229,10 @@ namespace SelfDC.Views
 
             // User confirm?
             DialogResult res = MessageBox.Show(
-                        "Vuoi esportare il file?", 
-                        "Esporta Ordine", 
-                        MessageBoxButtons.YesNo, 
-                        MessageBoxIcon.Question, 
+                        "Vuoi esportare il file?",
+                        "Esporta Ordine",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question,
                         MessageBoxDefaultButton.Button1);
             if (res == DialogResult.No) return;
 
@@ -203,7 +248,7 @@ namespace SelfDC.Views
                 if (res == DialogResult.No) return;
             }
 
-            Order ordine = new Order();
+            Order ordine = new Order(Settings.CodiceCliente);
             foreach (ListViewItem item in listBox.Items)
             {
                 ordine.Add(new OrderItem(item.Text, item.SubItems[1].Text, Convert.ToInt32(item.SubItems[2].Text)));
@@ -217,7 +262,48 @@ namespace SelfDC.Views
             listBox_SelectedIndexChanged(sender, e);
             listaProdotti.Clear();
 
-            MessageBox.Show("File esportato con successo","Esporta Dati");
+            MessageBox.Show("File esportato con successo", "Esporta Dati");
+        }
+        #endregion
+
+        private void bcReader_OnScan(object sender, EventArgs e)
+        {
+            ScsUtils.WriteLog(string.Format("Evento {0}.OnScan chiamato da {1}", this.Name, sender.GetType().Name));
+            String code = bcReader.Barcode;
+            if (code == null) return;
+
+            actNew(bcReader, null);
+
+            if (code.StartsWith("$"))
+            {
+                // codice interno
+                cbCodInterno.Checked = true;
+                txtCode.Text = code.Substring(1, 7);
+            }
+            else
+            {
+                // codice ean
+                cbCodInterno.Checked = false;
+                txtCode.Text = code;
+            }
+            // txtQta.Text = "1";
+
+            actSave(bcReader, null);
+        }
+
+
+        /*  Form Resize */
+        private void OrderForm_Resize(object sender, EventArgs e)
+        {
+            double ctlWidth = (double)ClientSize.Width;
+
+            /** Resize listBox */
+            listBox.Width = (int)ctlWidth;
+            listBox.Columns[0].Width = (int)(ctlWidth * 0.50);
+            listBox.Columns[1].Width = (int)(ctlWidth * 0.30);
+            listBox.Columns[1].Width = (int)(ctlWidth * 0.20);
+
+            ScsUtils.WriteLog("In " + this.Name + ", resize della finestra");
         }
 
         /** Abilita menu di modifica solo se è selezionata un riga della lista */
@@ -259,75 +345,6 @@ namespace SelfDC.Views
 
                 btnSave.Enabled = false;
             }
-        }
-
-        /** Salva modifica */
-        private void actSave(object sender, EventArgs e)
-        {
-            if (txtCode.Text == "")
-            {
-                MessageBox.Show("Niente da inserire", "Salva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-				actFieldReset();
-                return;
-            }
-
-            // se ci sono elementi selezionati => è una modifica
-            ListViewItem item;
-            if ((listBox.SelectedIndices.Count > 0) && ItemEdit)
-            {
-                item = listBox.Items[listBox.SelectedIndices[0]];
-                if (cbCodInterno.Checked)
-                    item.SubItems[1].Text = txtCode.Text; // cod interno
-                else
-                    item.Text = txtCode.Text; // ean
-
-                if (!Validate()) return;
-                item.SubItems[2].Text = txtQta.Text; // qta
-                ItemEdit = false;
-                ScsUtils.WriteLog("In " + this.Name + ", salvataggio modifiche alla riga " + txtCode.Text);
-            }
-            else // Nuovo inserimento manuale
-            {
-                item = new ListViewItem();
-                if (cbCodInterno.Checked) 
-                {
-                    item.Text = "";
-                    item.SubItems.Add(txtCode.Text);
-                }
-                else
-                {
-                    item.Text = txtCode.Text;
-                    item.SubItems.Add("");
-                }
-
-                if (txtQta.Text == "")
-                {
-                    txtQta.Text = "1";
-                }
-                item.SubItems.Add(txtQta.Text);
-
-                // se la quantità non è valida annulla il salvataggio
-                if (!Validate()) return;
-                listBox.Items.Add(item);
-                ScsUtils.WriteLog("In " + this.Name + ", nuovo inserimento della riga " + txtCode.Text);
-            }
-
-            this.statusBar.Text = string.Format("{0} record", listBox.Items.Count);
-
-            // pulisco e disabilito i campi
-            actFieldReset();
-        }
-
-        /** Reimposta ai controlli della maschera */
-        private void actFieldReset()
-        {
-            txtCode.Text = "";
-            txtCode.Enabled = false;
-            txtQta.Text = "";
-            txtQta.Enabled = false;
-            cbCodInterno.Checked = true;
-            cbCodInterno.Enabled = false;
-            btnSave.Enabled = false;
         }
 
         /** Annulla modifica */

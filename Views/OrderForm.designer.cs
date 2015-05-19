@@ -235,6 +235,7 @@
             this.listBox.ContextMenu = this.contextMenu;
             this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox.FullRowSelect = true;
+            this.listBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             listViewItem1.Text = "123456789012";
             listViewItem1.SubItems.Add("");
             listViewItem1.SubItems.Add("10");

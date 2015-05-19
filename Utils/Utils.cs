@@ -21,8 +21,13 @@ namespace SelfDC.Utils
         /// <param name="logMsg"></param>
         public static void WriteLog(string logMsg)
         {
-            StreamWriter sw = new StreamWriter(GetAppPath() + "\\" + GetAppAssemblyName() + "_log.txt", true);
-            sw.WriteLine("{0:yyyy-MM-dd HH:mm:ss}: {1}", DateTime.Now, logMsg);
+            string LogPath = string.Format("{0}\\LOG", GetAppPath());
+            string LogFileName = string.Format("{0}\\{1}_log-{2:yyyyMMdd}.txt", LogPath, GetAppAssemblyName(), DateTime.Now);
+
+            if (!Directory.Exists(LogPath))
+                Directory.CreateDirectory(LogPath);
+            StreamWriter sw = new StreamWriter(LogFileName, true);
+            sw.WriteLine("{0:HH:mm:ss}: {1}", DateTime.Now, logMsg);
             sw.Close();
         }
 
