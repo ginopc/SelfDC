@@ -75,29 +75,23 @@ namespace SelfDC.Views
         {
             int index = listBox.SelectedIndices[0];
             ListViewItem item = listBox.Items[index];
-            OrderItem oItem = myOrder.Items[index];
 
             ScsUtils.WriteLog(string.Format("In {0}, modifica della riga {1}", this.Name, index.ToString()));
 
-            txtCode.Text = (oItem.productCode.Trim().Length > 0) ? oItem.productCode : oItem.barcode;
-            cbCodInterno.Checked = (oItem.productCode.Trim().Length > 0);
-            /*
-            if (item.Text == "")
+            if (listBox.Items[index].Text == "")
             {
                 cbCodInterno.Checked = true;
-                txtCode.Text = item.SubItems[1].Text;
+                txtCode.Text = listBox.Items[index].SubItems[1].Text;
             }
             else
             {
                 cbCodInterno.Checked = false;
                 txtCode.Text = listBox.Items[index].Text;
             }
-             */ 
-            // enable checkbox
+            // blocco la checkbox
             cbCodInterno.Enabled = false;
 
-            // txtQta.Text = listBox.Items[index].SubItems[2].Text;
-            txtQta.Text = oItem.qta.ToString();
+            txtQta.Text = listBox.Items[index].SubItems[2].Text;
             txtQta.Focus();
             txtQta.Select(0, txtQta.Text.Length);
         }
@@ -150,13 +144,19 @@ namespace SelfDC.Views
             {
                 item = listBox.Items[listBox.SelectedIndices[0]];
                 if (cbCodInterno.Checked)
+                {
                     item.SubItems[1].Text = txtCode.Text; // cod interno
+                }
                 else
+                {
                     item.Text = txtCode.Text; // ean
+                }
 
                 if (!Validate()) return;
                 item.SubItems[2].Text = txtQta.Text; // qta
                 ItemEdit = false;
+
+                // faccio l'update anche sugli elementi della classe
                 ScsUtils.WriteLog("In " + this.Name + ", salvataggio modifiche alla riga " + txtCode.Text);
             }
             else // Nuovo inserimento manuale
