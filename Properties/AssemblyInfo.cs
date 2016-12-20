@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("Motorola")]
 [assembly: AssemblyCompany("S.C.S. scarl")]
 [assembly: AssemblyProduct("SelfDC Pda")]
-[assembly: AssemblyCopyright("Copyright © 2014 by Maurizio Aru")]
+[assembly: AssemblyCopyright("Copyright © 2014-2016 by Maurizio Aru")]
 [assembly: AssemblyTrademark("SCS")]
 [assembly: AssemblyCulture("")]
 
@@ -30,7 +30,7 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.0.9.*")]
+[assembly: AssemblyVersion("0.0.10.*")]
 
 // Below attribute is to suppress FxCop warning "CA2232 : Microsoft.Usage : Add STAThreadAttribute to assembly"
 // as Device app does not support STA thread.

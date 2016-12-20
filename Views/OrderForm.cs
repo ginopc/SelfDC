@@ -16,7 +16,7 @@ namespace SelfDC.Views
         private IDevice bcReader;
 
         // per la serializzazione
-        private string FileName = @"order.tmp";
+        private string TempFileName = @"order.tmp";
         private Order myOrder;
 
         /** costruttore della classe */
