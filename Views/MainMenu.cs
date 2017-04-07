@@ -91,6 +91,7 @@ namespace SelfDC.Views
             // Pulsanti quadrati: H = W
             int btnWidth = tableSize / numCols;
             int btnHeight = btnWidth;
+
             
             /*
             for (int i = 0; i < numCols; i++) // colonne
@@ -98,6 +99,8 @@ namespace SelfDC.Views
                 for (int j = 0; j < numRows; j++) // righe
                 {
                     // è uno dei pulsanti del menu
+                    string ctrlName = string.Format("picButton{0}{1}", i, j);
+                    PictureBox ctrl = this.Controls.Find(ctlrName) ;
                     ctrl.Height = btnHeight - (2 * borderSize);
                     ctrl.Width = btnWidth - (2 * borderSize);
                 }
@@ -149,7 +152,7 @@ namespace SelfDC.Views
 
             // riporta le info di versione nel box in alto a destra
             lblAppName.Text = Assembly.GetExecutingAssembly().GetName().Name.ToString();
-            lblAppVersion.Text = string.Format("v.{1}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            lblAppVersion.Text = string.Format("v. {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         private void MainMenu_Closed(object sender, EventArgs e)

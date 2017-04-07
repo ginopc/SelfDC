@@ -146,7 +146,7 @@
             this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBody.Location = new System.Drawing.Point(0, 57);
             this.pnlBody.Name = "pnlBody";
-            this.pnlBody.Size = new System.Drawing.Size(264, 384);
+            this.pnlBody.Size = new System.Drawing.Size(640, 384);
             // 
             // pnlFooter
             // 
@@ -156,14 +156,14 @@
             this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlFooter.Location = new System.Drawing.Point(0, 441);
             this.pnlFooter.Name = "pnlFooter";
-            this.pnlFooter.Size = new System.Drawing.Size(264, 39);
+            this.pnlFooter.Size = new System.Drawing.Size(640, 39);
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.Controls.Add(btnQuit);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(216, 0);
+            this.panel3.Location = new System.Drawing.Point(592, 0);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(48, 39);
             // 
@@ -175,7 +175,7 @@
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(264, 57);
+            this.pnlHeader.Size = new System.Drawing.Size(640, 57);
             // 
             // panel1
             // 
@@ -183,7 +183,7 @@
             this.panel1.Controls.Add(this.lblAppName);
             this.panel1.Controls.Add(this.lblAppVersion);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(122, 0);
+            this.panel1.Location = new System.Drawing.Point(498, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(142, 57);
             // 
@@ -214,7 +214,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(264, 480);
+            this.ClientSize = new System.Drawing.Size(640, 480);
             this.ControlBox = false;
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlHeader);
