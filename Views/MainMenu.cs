@@ -147,14 +147,9 @@ namespace SelfDC.Views
                 picLogo.Image = new Bitmap(logoFileName);
             }
 
-            string appName = Assembly.GetExecutingAssembly().GetName().Name.ToString();
-            string appVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            lblTitle.Text = string.Format("{0} v.{1}", appName, appVersion);
-        }
-
-        private void lblTitle_ParentChanged(object sender, EventArgs e)
-        {
-
+            // riporta le info di versione nel box in alto a destra
+            lblAppName.Text = Assembly.GetExecutingAssembly().GetName().Name.ToString();
+            lblAppVersion.Text = string.Format("v.{1}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         private void MainMenu_Closed(object sender, EventArgs e)

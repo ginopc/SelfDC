@@ -43,7 +43,8 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblAppName = new System.Windows.Forms.Label();
+            this.lblAppVersion = new System.Windows.Forms.Label();
             btnInfo = new System.Windows.Forms.PictureBox();
             btnQuit = new System.Windows.Forms.PictureBox();
             this.pnlBody.SuspendLayout();
@@ -58,7 +59,7 @@
             btnInfo.Image = ((System.Drawing.Image)(resources.GetObject("btnInfo.Image")));
             btnInfo.Location = new System.Drawing.Point(3, 3);
             btnInfo.Name = "btnInfo";
-            btnInfo.Size = new System.Drawing.Size(40, 40);
+            btnInfo.Size = new System.Drawing.Size(40, 36);
             btnInfo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             btnInfo.Click += new System.EventHandler(this.actAbout);
             // 
@@ -67,7 +68,7 @@
             btnQuit.Image = ((System.Drawing.Image)(resources.GetObject("btnQuit.Image")));
             btnQuit.Location = new System.Drawing.Point(3, 3);
             btnQuit.Name = "btnQuit";
-            btnQuit.Size = new System.Drawing.Size(40, 40);
+            btnQuit.Size = new System.Drawing.Size(40, 36);
             btnQuit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             btnQuit.Click += new System.EventHandler(this.actQuit);
             // 
@@ -131,7 +132,7 @@
             this.picLogo.Image = ((System.Drawing.Image)(resources.GetObject("picLogo.Image")));
             this.picLogo.Location = new System.Drawing.Point(0, 0);
             this.picLogo.Name = "picLogo";
-            this.picLogo.Size = new System.Drawing.Size(43, 45);
+            this.picLogo.Size = new System.Drawing.Size(56, 57);
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             // 
             // pnlBody
@@ -143,9 +144,9 @@
             this.pnlBody.Controls.Add(this.picButton13);
             this.pnlBody.Controls.Add(this.picButton21);
             this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBody.Location = new System.Drawing.Point(0, 45);
+            this.pnlBody.Location = new System.Drawing.Point(0, 57);
             this.pnlBody.Name = "pnlBody";
-            this.pnlBody.Size = new System.Drawing.Size(640, 390);
+            this.pnlBody.Size = new System.Drawing.Size(264, 384);
             // 
             // pnlFooter
             // 
@@ -153,18 +154,18 @@
             this.pnlFooter.Controls.Add(this.panel3);
             this.pnlFooter.Controls.Add(btnInfo);
             this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlFooter.Location = new System.Drawing.Point(0, 435);
+            this.pnlFooter.Location = new System.Drawing.Point(0, 441);
             this.pnlFooter.Name = "pnlFooter";
-            this.pnlFooter.Size = new System.Drawing.Size(640, 45);
+            this.pnlFooter.Size = new System.Drawing.Size(264, 39);
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.Controls.Add(btnQuit);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(592, 0);
+            this.panel3.Location = new System.Drawing.Point(216, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(48, 45);
+            this.panel3.Size = new System.Drawing.Size(48, 39);
             // 
             // pnlHeader
             // 
@@ -174,35 +175,46 @@
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(640, 45);
+            this.pnlHeader.Size = new System.Drawing.Size(264, 57);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.lblTitle);
+            this.panel1.Controls.Add(this.lblAppName);
+            this.panel1.Controls.Add(this.lblAppVersion);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(498, 0);
+            this.panel1.Location = new System.Drawing.Point(122, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(142, 45);
+            this.panel1.Size = new System.Drawing.Size(142, 57);
             // 
-            // lblTitle
+            // lblAppName
             // 
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblTitle.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblTitle.Location = new System.Drawing.Point(0, 28);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(142, 17);
-            this.lblTitle.Text = "Self DC v. 0.0.5";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lblTitle.ParentChanged += new System.EventHandler(this.lblTitle_ParentChanged);
+            this.lblAppName.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblAppName.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
+            this.lblAppName.ForeColor = System.Drawing.Color.Gray;
+            this.lblAppName.Location = new System.Drawing.Point(0, 23);
+            this.lblAppName.Name = "lblAppName";
+            this.lblAppName.Size = new System.Drawing.Size(142, 17);
+            this.lblAppName.Text = "Self DC";
+            this.lblAppName.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblAppVersion
+            // 
+            this.lblAppVersion.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblAppVersion.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
+            this.lblAppVersion.ForeColor = System.Drawing.Color.Gray;
+            this.lblAppVersion.Location = new System.Drawing.Point(0, 40);
+            this.lblAppVersion.Name = "lblAppVersion";
+            this.lblAppVersion.Size = new System.Drawing.Size(142, 17);
+            this.lblAppVersion.Text = "v. 0.0.5";
+            this.lblAppVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(640, 480);
+            this.ClientSize = new System.Drawing.Size(264, 480);
             this.ControlBox = false;
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlHeader);
@@ -232,13 +244,14 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblAppVersion;
         private System.Windows.Forms.PictureBox picButton11;
         private System.Windows.Forms.PictureBox picButton12;
         private System.Windows.Forms.PictureBox picButton13;
         private System.Windows.Forms.PictureBox picButton21;
         private System.Windows.Forms.PictureBox picButton22;
         private System.Windows.Forms.PictureBox picButton23;
+        private System.Windows.Forms.Label lblAppName;
 
 
     }
